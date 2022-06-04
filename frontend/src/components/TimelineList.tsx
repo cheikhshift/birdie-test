@@ -11,13 +11,18 @@ class TimelineList extends React.Component<{
   state = {
   	sortColumn : "",
   	sortOrder : -1,
-
+  	query : ""
   }
 
 
 
  onQueryChange = (mood: string) : void => {
- 	console.log(mood)
+ 	this.setState(prevState => {
+ 		return {
+ 			...prevState,
+ 			query : mood
+ 		}
+ 	})
  }
 
  onSortOrderChange = (order: string) : void => {
@@ -31,6 +36,17 @@ class TimelineList extends React.Component<{
 
   render(){
 
+  	const items = this.props.events.filter(ev => {
+  		var md = ev.mood as string
+  		return md.includes(this.state.query)
+  	})
+
+
+  	const itemView = items.length === 0 && this.props.events.length > 0 ? (<h2>No items found for query</h2>)
+  	: items.map(e => (
+		 <TimelineItem key={e.id} {...e}/>
+	))
+
   	//format date data
     return (
 	    <div className="timeline">
@@ -38,9 +54,7 @@ class TimelineList extends React.Component<{
 	    	onQueryChange={this.onQueryChange} 
 	    	onSortByChange={this.onSortByChange}
 	    	onSortOrderChange={this.onSortOrderChange} />
-		    {this.props.events.map(e => (
-		    	<TimelineItem key={e.id} {...e}/>
-		    ))}
+		    {itemView}
 	    </div>
      )
   }
