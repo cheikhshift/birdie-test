@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 10vmin;
   pointer-events: none;
 }
 
@@ -15,7 +15,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,4 +35,31 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.timeline {
+  text-align: left;
+  max-width: 400px;
+  margin:15px auto;
+}
+
+.timeline-item {
+  padding: 5px 5px;
+  border-left: 2px solid #333;
+}
+
+.timeline-bubble {
+    float: left;
+    width: 30px;
+    height: 30px;
+    border: 1px #333 solid;
+    border-radius: 50%;
+    background: #fff;
+    position: relative;
+    left: -21px;
+    top: -13px;
+}
+
+.timeline-item p {
+  padding-left : 30px;
 }
