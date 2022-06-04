@@ -1,23 +1,38 @@
 import React from 'react';
-
+import { Event } from '../../../backend/src/db/types'
+import "./Table.css"
 
 class TableList extends React.Component<{
-	events : any[] // referring to this as any to avoid importing interface decl from backend code.
+	events : Event[]
 },{}> {
   
 
-  // TODO - write function to update events 
-  // after given interval
+   getCaregiver(id : string) : string{
+    return "Placeholder Caregiver name"
+  }
 
   render(){
 
-  	//format date data
-  	this.props.events.map(ev => ev.timestamp = new Date(ev.timestamp).toLocaleString())
 
     return (
-	    <div className="timeline">
-		  
-	    </div>
+	   <table className="events">
+       <thead>
+          <tr>
+            <th >Mood</th>
+            <th style={{"width" : "40%"}}>Time</th>
+            <th>Caregiver</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.props.events.map(ev => (
+            <tr key={ev.id}>
+              <td>{ev.mood}</td>
+              <td>{new Date(ev.timestamp).toLocaleString()}</td>
+              <td>{this.getCaregiver(ev.caregiver_id)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
      )
   }
 }

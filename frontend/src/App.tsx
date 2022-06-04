@@ -3,8 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 import TimelineList from './components/TimelineList'
 import TableList from './components/TableList'
+import { Event } from '../../backend/src/db/types'
 
-class App extends React.Component {
+class App extends React.Component<{}, {
+  events : Event[],
+  tableMode : boolean
+}> {
 
    state = {
       events : [{  
@@ -17,7 +21,7 @@ class App extends React.Component {
          "mood":"okay",
       },
       {  
-         "id":"decaa026-2ce5-49cb-aff9-92326b85a98c",
+         "id":"decaa026-2ce5-49cb-aff9-92326b85a9c",
          "event_type":"mood_observation",
          "visit_id":"39b94aab-cc35-4874-807f-c23472aec663",
          "timestamp":"2019-04-23T10:53:13+01:00",
@@ -26,7 +30,7 @@ class App extends React.Component {
          "mood":"bad",
       },
       {  
-         "id":"decaa026-2ce5-49cb-aff9-92326b85a98c",
+         "id":"decaa026-2ce5-49cb-aff9-92326b85a",
          "event_type":"mood_observation",
          "visit_id":"39b94aab-cc35-4874-807f-c23472aec663",
          "timestamp":"2019-04-23T10:53:13+01:00",
@@ -39,7 +43,7 @@ class App extends React.Component {
 
   
 
-  toggleTableMode = ()=> {
+  public toggleTableMode = ()=> {
 
     let tableMode = this.state.tableMode ? false : true
     this.setState((prevState) => {
@@ -54,6 +58,7 @@ class App extends React.Component {
 
     const buttonText = this.state.tableMode ? "timeline" : "table"
 
+
     let viewPref = !this.state.tableMode ? <TimelineList  events={this.state.events} /> :
     <TableList events={this.state.events} />
 
@@ -62,8 +67,7 @@ class App extends React.Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <button onClick={this.toggleTableMode}>View as { buttonText }</button>
-        
+        <button id="toggleButton" onClick={this.toggleTableMode}>View as { buttonText }</button>     
         {viewPref}
       </div>
   )

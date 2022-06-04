@@ -27,7 +27,7 @@ class TimelineItem extends React.Component<{
     return (
 	    <div className="timeline-item">
 	    	<div style={{background : mood_color}} className="timeline-bubble"> </div>
-	    	<p>Mood {this.props.mood} - {this.props.timestamp}  <br/>
+	    	<p><span>Mood {this.props.mood}</span> - <span>{new Date(this.props.timestamp).toLocaleString() }</span>  <br/>
 	    	Caregiver { this.getCaregiver(this.props.caregiver_id)}</p>
 	    </div>
      )

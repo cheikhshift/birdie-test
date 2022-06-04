@@ -1,4 +1,5 @@
 import { MySqlConnection } from 'mysqlconnector'
+import { Event } from './types'
 
 // BirdieDatabase will abstract connecting
 // to the mysql database. It will 
@@ -47,14 +48,4 @@ export class BirdieDatabase {
 	public async close(){
 		await this.conn.closeAsync()
 	}
-}
-
-export interface Event {
-	id : string
-	event_type : "mood_observation" | "other_event_type"
-	visit_id : string
-	timestamp : string
-	caregiver_id : string
-	care_recipient_id : string
-	mood? : string
 }
