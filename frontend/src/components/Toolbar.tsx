@@ -1,11 +1,11 @@
 import React from 'react';
 import './Toolbar.css'
 
+import { Event } from '../../../backend/src/db/types'
 
 class Toolbar extends React.Component<{
 	onQueryChange :  (mood: string) => void,
 	onSortOrderChange :  (order: string) => void,
-	onSortByChange : (sortBy: string) => void
 },{}> {
   
   updateText = (e : any) => {
@@ -16,25 +16,39 @@ class Toolbar extends React.Component<{
   	this.props.onSortOrderChange(e.target.value)
   }
 
-  updateSorting = (e : any) => {
-  	this.props.onSortByChange(e.target.value)
-  }
+  
+  // static method to sort items,
+  // shared by both classes.
+  public static filterItems(items : Event[], query : string, sortOrder : number) : Event[] {
+  	var result = items.filter(ev => {
+  		var md = ev.mood as string
+  		return md.includes(query)
+  	})
 
+
+  	result.sort((a : Event, b : Event) => {
+  		var aa = new Date(a.timestamp).getTime()
+  		var bb = new Date(b.timestamp).getTime()
+
+  		if(sortOrder === -1)
+  			return bb - aa
+
+  		return aa - bb
+  	})
+
+
+  	return result
+
+  } 
   
   render(){
 
   	//format date data
     return (
 	    <div className="toolbar">
-	    	<select onChange={this.updateSorting}>
-	    		<option value="">SORT BY</option>
-	    		<option value="mood">MOOD</option>
-	    		<option value="timestamp">TIME</option>
-	    	</select>
-	    	<select onChange={this.updateOrder}>
-	    		<option value="">SORT ORDER</option>
-	    		<option value="-1">DESCENDING</option>
-	    		<option value="1">ASCENDING</option>
+	    	<label>SORT BY  </label><select onChange={this.updateOrder}>
+	    		<option value="-1">MOST RECENT</option>
+	    		<option value="1">OLDEST</option>
 	    	</select>
 		  	<input type="text" onChange={this.updateText} placeholder="Filter by mood type" />
 	    </div>

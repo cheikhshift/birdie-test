@@ -9,7 +9,6 @@ class TimelineList extends React.Component<{
 },{}> {
   
   state = {
-  	sortColumn : "",
   	sortOrder : -1,
   	query : ""
   }
@@ -25,21 +24,24 @@ class TimelineList extends React.Component<{
  	})
  }
 
- onSortOrderChange = (order: string) : void => {
-
+ onSortOrderChange = (order : string) : void => {
+ 	this.setState(prevState => {
+ 		return {
+ 			...prevState,
+ 			sortOrder : parseInt(order)
+ 		}
+ 	})	
  }
 
- onSortByChange = (sortBy: string) : void => {
-
- }
 
 
   render(){
 
-  	const items = this.props.events.filter(ev => {
-  		var md = ev.mood as string
-  		return md.includes(this.state.query)
-  	})
+  	const items = Toolbar.filterItems(
+  		this.props.events,
+  		this.state.query,
+  		this.state.sortOrder
+  	)
 
 
   	const itemView = items.length === 0 && this.props.events.length > 0 ? (<h2>No items found for query</h2>)
@@ -52,7 +54,6 @@ class TimelineList extends React.Component<{
 	    <div className="timeline">
 	    	<Toolbar 
 	    	onQueryChange={this.onQueryChange} 
-	    	onSortByChange={this.onSortByChange}
 	    	onSortOrderChange={this.onSortOrderChange} />
 		    {itemView}
 	    </div>
