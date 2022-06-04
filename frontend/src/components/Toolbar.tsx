@@ -27,8 +27,8 @@ class Toolbar extends React.Component<{
 
 
   	result.sort((a : Event, b : Event) => {
-  		var aa = new Date(a.timestamp).getTime()
-  		var bb = new Date(b.timestamp).getTime()
+  		const aa = new Date(a.timestamp).getTime()
+  		const bb = new Date(b.timestamp).getTime()
 
   		if(sortOrder === -1)
   			return bb - aa
