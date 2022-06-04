@@ -46,11 +46,11 @@ class Toolbar extends React.Component<{
   	//format date data
     return (
 	    <div className="toolbar">
-	    	<label>SORT BY  </label><select onChange={this.updateOrder}>
+	    	<label>SORT BY  </label><select aria-label="sort-field" onChange={this.updateOrder}>
 	    		<option value="-1">MOST RECENT</option>
 	    		<option value="1">OLDEST</option>
 	    	</select>
-		  	<input type="text" onChange={this.updateText} placeholder="Filter by mood type" />
+		  	<input aria-label="query-field" type="text" onChange={this.updateText} placeholder="Filter by mood type" />
 	    </div>
      )
   }
