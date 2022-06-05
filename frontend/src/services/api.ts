@@ -1,4 +1,4 @@
-export const baseURL = isDev() ? "http://localhost:8000" : "<public api url>"
+export const baseURL = isDev() ? "http://localhost:8000" : "https://birdie-demo.herokuapp.com"
 
 export function isDev(){
 	return !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
