@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import { TestData } from './TimelineList.test'
+import { TestData } from '../testdata'
 import TimelineItem from './TimelineItem'
 
 
@@ -16,7 +16,7 @@ test('to see if TimelineItem will render correctly', () => {
   ).toBeInTheDocument()
 
   expect(
-  	screen.getByText( "Mood " + TestData[0].mood as string)
+  	screen.getByText( "mood_observation " + TestData[0].mood as string)
   ).toBeInTheDocument()
 
   

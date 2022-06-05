@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 import { Event } from '../../../backend/src/db/types'
 
@@ -19,12 +19,33 @@ test('to see if data passed is rendered on screen.', () => {
   	screen.getByText(dateFormatted)
   ).toBeInTheDocument()
 
-  expect(
-  	screen.getByText( "Mood " + TestData[0].mood as string)
-  ).toBeInTheDocument()
-
 
   var lengthOfItems = document.querySelectorAll('.timeline-item').length;
+  expect(lengthOfItems).toBe(TestData.length)
+  
+});
+
+test('to see if infinite scroll is working.', () => {
+
+  TimelineList.BatchSize = 1
+  render(<TimelineList events={TestData} />);
+
+  const nextButton = screen.getByRole('button', {
+    name: /load more/i
+  })
+
+  var lengthOfItems = document.querySelectorAll('.timeline-item').length;
+  expect(lengthOfItems).toBe(TimelineList.BatchSize)
+
+   fireEvent(
+      nextButton,
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      })
+  )
+
+  lengthOfItems = document.querySelectorAll('.timeline-item').length;
   expect(lengthOfItems).toBe(TestData.length)
   
 });
