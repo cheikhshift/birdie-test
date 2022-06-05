@@ -40,10 +40,10 @@ class TableNav extends React.Component<{
           <option>50</option>
           <option>100</option>
 	    	</select>
-        <button onClick={this.firstPäge}  disabled={this.props.currentPage === 0} > First page </button>
-		  	<button onClick={this.prevPage} disabled={this.props.currentPage === 0}> Previous </button>
-        <b> {properPage} / {this.props.pages} </b>
-        <button onClick={this.nextPage}  disabled={ properPage === this.props.pages}> Next </button>
+        <button onClick={this.firstPäge}  disabled={this.props.currentPage === 0} >First page</button>
+		  	<button onClick={this.prevPage} aria-label="prev-button" disabled={this.props.currentPage === 0}>Previous</button>
+        <b>{properPage} / {this.props.pages}</b>
+        <button onClick={this.nextPage}  disabled={ properPage === this.props.pages}>Next</button>
 	    </div>
      )
   }

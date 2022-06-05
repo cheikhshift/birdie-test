@@ -86,9 +86,9 @@ class TableList extends React.Component<{
           </thead>
           <tbody>
             {items
-              .slice(offset,offset + this.state.pageSize)
+              .slice(offset, offset + this.state.pageSize)
               .map(ev => (
-              <tr key={ev.id}>
+              <tr className="table-row" key={ev.id}>
                 <td>{ev.mood}</td>
                 <td>{new Date(ev.timestamp).toLocaleString()}</td>
                 <td>{this.getCaregiver(ev.caregiver_id)}</td>
