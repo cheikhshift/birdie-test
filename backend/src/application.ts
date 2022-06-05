@@ -1,6 +1,7 @@
 import * as express from "express";
 import {pingController} from "./controllers/ping";
 import {moodController} from './controllers/mood'
+
 import { BirdieDatabase } from './db/mysql';
 
 
@@ -15,6 +16,14 @@ const creds = {
 
 
 const app = express();
+
+app.use((_, res, next) => {
+
+	res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    
+    next()
+})
 
 app.use(pingController);
 

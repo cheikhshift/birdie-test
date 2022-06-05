@@ -21,7 +21,7 @@ class App extends React.Component<{}, {
 
 
   componentDidMount(){
-      getEvents()
+      getEvents(0, 100)
       .then( events => {
           this.updateEvents(events)
       })
@@ -29,6 +29,7 @@ class App extends React.Component<{}, {
         if(isDev()){
           this.updateEvents(TestData)
         }
+       
       })
   }
 
@@ -36,7 +37,7 @@ class App extends React.Component<{}, {
     this.setState((prevState) => {
       return {
           ...prevState,
-          events : TestData
+          events : events
         }
      })
   }

@@ -48,10 +48,15 @@ class TableList extends React.Component<{
    this.setState(prevState => {
      return {
        ...prevState,
-       pageSize : page
+       pageSize : page,
+       currentPage : 0
      }
    })  
- } 
+ }
+
+ componentDidUpdate(){
+   window.scrollTo(0, 0)
+ }
 
 
   getCaregiver(id : string) : string{
@@ -79,9 +84,11 @@ class TableList extends React.Component<{
   	   <table className="events">
          <thead>
             <tr>
+              <th >Type</th>
               <th >Mood</th>
               <th style={{"width" : "40%"}}>Time</th>
               <th>Caregiver</th>
+              <th >Notes</th>
             </tr>
           </thead>
           <tbody>
@@ -89,9 +96,11 @@ class TableList extends React.Component<{
               .slice(offset, offset + this.state.pageSize)
               .map(ev => (
               <tr className="table-row" key={ev.id}>
+                <td>{ev.event_type}</td>
                 <td>{ev.mood}</td>
                 <td>{new Date(ev.timestamp).toLocaleString()}</td>
                 <td>{this.getCaregiver(ev.caregiver_id)}</td>
+                <td>{ev.payload.note}</td>
               </tr>
             ))}
           </tbody>

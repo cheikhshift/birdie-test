@@ -5,16 +5,16 @@ export function isDev(){
 }
 
 
-export async function getEvents(){
+export async function getEvents(page : number, limit : number){
 	
 	const response = await fetch(
-      `${baseURL}/events` 
+      `${baseURL}/events?page=${page}&limit=${limit}` 
     )
 
 	let actualData = await response.json();
 
     if (!response.ok) {
-    
+        
         throw new Error(
         	actualData
         );
@@ -22,5 +22,12 @@ export async function getEvents(){
 
     
 
-    return actualData
+    return actualData.map( (row: any ) => {
+        row.event_type = row.event_type.split("_").join(" ")
+        if(row.payload.mood){
+            console.log(row)
+            row.mood = row.payload.mood
+        }
+        return row
+    })
 }

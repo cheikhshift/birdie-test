@@ -22,7 +22,7 @@ class Toolbar extends React.Component<{
   public static filterItems(items : Event[], query : string, sortOrder : number) : Event[] {
   	var result = items.filter(ev => {
   		var md = ev.mood as string
-  		return md.includes(query)
+  		return ev.event_type.includes(query) || md?.includes(query)
   	})
 
 
@@ -50,7 +50,7 @@ class Toolbar extends React.Component<{
 	    		<option value="-1">MOST RECENT</option>
 	    		<option value="1">OLDEST</option>
 	    	</select>
-		  	<input aria-label="query-field" type="text" onChange={this.updateText} placeholder="Filter by mood type" />
+		  	<input aria-label="query-field" type="text" onChange={this.updateText} placeholder="Filter by mood or event" />
 	    </div>
      )
   }

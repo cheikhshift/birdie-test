@@ -31,7 +31,7 @@ class TableNav extends React.Component<{
   
   render(){
 
-    let properPage = this.props.currentPage + 1
+    let properPage = this.props.pages === 0 ? 0 :  this.props.currentPage + 1
   	//format date data
     return (
 	    <div className="footer">
