@@ -55,8 +55,7 @@ test('to see if TableNav events are working', () => {
   expect(props.onPageSet.mock.calls.length).toBe(2)
   
   // Check if page number is displaying correctly
-  // after second page change operation.
-   expect(
+  expect(
     screen.getByText("2 / 10")
   ).toBeInTheDocument()
 

@@ -1,5 +1,5 @@
 import { MySqlConnection } from 'mysqlconnector'
-import { Event } from './types'
+
 
 // BirdieDatabase will abstract connecting
 // to the mysql database. It will 
