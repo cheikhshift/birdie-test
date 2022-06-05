@@ -8,7 +8,8 @@ class TimelineItem extends React.Component<{
 	timestamp : string
 	caregiver_id : string
 	care_recipient_id : string
-	mood? : string
+	mood? : string,
+	payload : any
 }, {}> {
   
    mood_map : any = {
@@ -22,7 +23,7 @@ class TimelineItem extends React.Component<{
   
 
   render(){
-  	const mood_color = this.mood_map[this.props.mood as string]
+  	const mood_color = this.props.mood ? this.mood_map[this.props.mood as string] : "tan"
 
     return (
 	    <div className="timeline-item">

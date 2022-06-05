@@ -1,4 +1,4 @@
-import { MySqlConnection } from 'mysqlconnector'
+import { createPool, Pool} from 'mysql';
 
 
 // BirdieDatabase will abstract connecting
@@ -7,11 +7,11 @@ import { MySqlConnection } from 'mysqlconnector'
 // databases to the current stack
 export class BirdieDatabase {
 
-	private conn : MySqlConnection;
+	private pool : Pool;
 	private db : string = "";
 
 	constructor(){
-		this.conn = {} as MySqlConnection
+		this.pool = {} as Pool
 	}
 
 	public async connect(
@@ -20,12 +20,17 @@ export class BirdieDatabase {
 		username : string,
 		password : string,
 		database : string
-	){
-		const connection = new MySqlConnection(`${host}:${port}`, username, password);  
-     	
-    	await connection.connectAsync()
+	){	
+		this.pool = createPool({
+	      connectionLimit: 20,
+	      host: host,
+	      user: username,
+	      password: password,
+	      database: database,
+	      port : parseInt(port)
+	    });
+		
 
-    	this.conn = connection
     	this.db = database
 	}
 
@@ -36,16 +41,18 @@ export class BirdieDatabase {
 	/**
 	 * Retrieve data from MySQL db
 	 * @param {string} q - string with MySQL query
+	 * @param {string[] | Object} params - provide the parameterized values used in the query
 	 * @returns {any[]}  any[] with result of db query
 	 */
-	public async query(q : string){
+	public query(q : string, params : string[] | Object = []) : Promise<any[]>{
 
-		const result : any[] = await this.conn.queryAsync(q)
-		return result
+		return new Promise<any[]>((resolve, reject) => {
+	      this.pool.query(q, params, (error : any, results : any[]) => {
+	        if (error) reject(error);
+	        else resolve(results);
+	      });
+	    });
+		
 	}
 
-
-	public async close(){
-		await this.conn.closeAsync()
-	}
 }

@@ -6,4 +6,5 @@ export interface Event {
 	caregiver_id : string
 	care_recipient_id : string
 	mood? : string
+	payload : any
 }
