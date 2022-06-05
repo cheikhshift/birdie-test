@@ -1,5 +1,9 @@
+export const baseURL = isDev() ? "http://localhost:8000" : "<public api url>"
 
-export const baseURL = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? "http://localhost:8000" : "<public api url>"
+export function isDev(){
+	return !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
+}
+
 
 export async function getEvents(){
 	
@@ -7,13 +11,16 @@ export async function getEvents(){
       `${baseURL}/events` 
     )
 
+	let actualData = await response.json();
+
     if (!response.ok) {
+    
         throw new Error(
-          `HTTP error: The status is ${response.status}`
+        	actualData
         );
     }
 
-    let actualData = await response.json();
+    
 
     return actualData
 }

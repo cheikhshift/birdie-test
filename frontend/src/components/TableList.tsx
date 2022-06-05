@@ -1,6 +1,7 @@
 import React from 'react';
 import { Event } from '../../../backend/src/db/types'
 import Toolbar  from './Toolbar'
+import TableNav from './TableNav'
 
 import "./Table.css"
 
@@ -11,7 +12,9 @@ class TableList extends React.Component<{
   
    state = {
     sortOrder : -1,
-    query : ""
+    query : "",
+    currentPage : 0,
+    pageSize : 20
   }
 
   onQueryChange = (mood: string) : void => {
@@ -32,6 +35,24 @@ class TableList extends React.Component<{
    })  
  }
 
+ onPageSet = (page : number) : void => {
+   this.setState(prevState => {
+     return {
+       ...prevState,
+       currentPage : page
+     }
+   })  
+ } 
+
+ onPageSizeSet = (page : number) : void => {
+   this.setState(prevState => {
+     return {
+       ...prevState,
+       pageSize : page
+     }
+   })  
+ } 
+
 
   getCaregiver(id : string) : string{
     return "Placeholder Caregiver name"
@@ -39,11 +60,15 @@ class TableList extends React.Component<{
 
   render(){
 
+
     const items = Toolbar.filterItems(
       this.props.events,
       this.state.query,
       this.state.sortOrder
     )
+
+    const offset = this.state.currentPage * this.state.pageSize
+    const pages = Math.ceil(items.length/this.state.pageSize)
 
 
     return (
@@ -60,7 +85,9 @@ class TableList extends React.Component<{
             </tr>
           </thead>
           <tbody>
-            {items.map(ev => (
+            {items
+              .slice(offset,offset + this.state.pageSize)
+              .map(ev => (
               <tr key={ev.id}>
                 <td>{ev.mood}</td>
                 <td>{new Date(ev.timestamp).toLocaleString()}</td>
@@ -69,6 +96,12 @@ class TableList extends React.Component<{
             ))}
           </tbody>
         </table>
+        <TableNav 
+          onPageSizeSet={this.onPageSizeSet} 
+          onPageSet={this.onPageSet}
+          pages={pages} 
+          currentPage={this.state.currentPage}
+          />
       </div>
      )
   }
