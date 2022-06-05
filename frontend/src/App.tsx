@@ -91,7 +91,7 @@ class App extends React.Component<{}, {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <h3>Patient Observations</h3>
+        <h3>Patient Events</h3>
         <button id="toggleButton" onClick={this.toggleTableMode}>View as { buttonText }</button>     
         {viewPref}
       </div>

@@ -1,16 +1,7 @@
 import React from 'react';
+import { Event } from '../../../backend/src/db/types'
 
-
-class TimelineItem extends React.Component<{
-	id : string
-	event_type : string
-	visit_id : string
-	timestamp : string
-	caregiver_id : string
-	care_recipient_id : string
-	mood? : string,
-	payload : any
-}, {}> {
+class TimelineItem extends React.Component<Event, {}> {
   
    mood_map : any = {
   	"okay" : "green",
