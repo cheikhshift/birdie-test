@@ -19,6 +19,9 @@ test('to see if TableList will render correctly', () => {
   	screen.getByText(TestData[0].mood as string)
   ).toBeInTheDocument()
 
+
+  var lengthOfItems = document.querySelectorAll('.table-row').length;
+  expect(lengthOfItems).toBe(TestData.length)
   
 });
 

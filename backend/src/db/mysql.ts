@@ -36,7 +36,7 @@ export class BirdieDatabase {
 	/**
 	 * Retrieve data from MySQL db
 	 * @param {string} q - string with MySQL query
-	 * @returns {any[]} returns array of any, as a result of db query
+	 * @returns {any[]}  any[] with result of db query
 	 */
 	public async query(q : string){
 
