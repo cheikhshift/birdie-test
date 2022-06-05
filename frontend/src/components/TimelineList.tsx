@@ -10,16 +10,18 @@ class TimelineList extends React.Component<{
   
   state = {
   	sortOrder : -1,
-  	query : ""
+  	query : "",
+    currentPage : 1
   }
 
-
+ public static BatchSize = 40
 
  onQueryChange = (mood: string) : void => {
  	this.setState(prevState => {
  		return {
  			...prevState,
- 			query : mood
+ 			query : mood,
+      currentPage : 1
  		}
  	})
  }
@@ -28,11 +30,20 @@ class TimelineList extends React.Component<{
  	this.setState(prevState => {
  		return {
  			...prevState,
- 			sortOrder : parseInt(order)
+ 			sortOrder : parseInt(order),
+      currentPage : 1
  		}
  	})	
  }
-
+ 
+ nextPage = () => {
+   this.setState(prevState => {
+     return {
+      ...prevState,
+      currentPage : 1 + this.state.currentPage
+     }
+   })  
+ }
 
 
   render(){
@@ -41,11 +52,14 @@ class TimelineList extends React.Component<{
   		this.props.events,
   		this.state.query,
   		this.state.sortOrder
-  	).slice(0, 300)
+  	)
+    
+    const stopAtIndex = TimelineList.BatchSize * this.state.currentPage
+    const canScroll = stopAtIndex >= items.length
 
 
   	const itemView = items.length === 0 && this.props.events.length > 0 ? (<h2>No items found for query</h2>)
-  	: items.map(e => (
+  	: items.slice(0, stopAtIndex).map(e => (
 		 <TimelineItem key={e.id} {...e}/>
 	))
 
@@ -56,6 +70,7 @@ class TimelineList extends React.Component<{
 	    	onQueryChange={this.onQueryChange} 
 	    	onSortOrderChange={this.onSortOrderChange} />
 		    {itemView}
+        <button disabled={canScroll} onClick={this.nextPage} >Load more</button>
 	    </div>
      )
   }

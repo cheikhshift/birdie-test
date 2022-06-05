@@ -58,7 +58,6 @@ class TableList extends React.Component<{
 
 
 
-
   getCaregiver(id : string) : string{
     return "Placeholder Caregiver name"
   }
