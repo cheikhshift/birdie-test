@@ -19,7 +19,7 @@ class App extends React.Component<{}, {
       tableMode : false
   }
 
-  static BatchSize = 500
+  static BatchSize = 200
 
 
   componentDidMount(){
