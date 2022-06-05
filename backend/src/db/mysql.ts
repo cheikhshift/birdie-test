@@ -55,4 +55,13 @@ export class BirdieDatabase {
 		
 	}
 
+	close(){
+		return new Promise((resolve, reject) => {
+			this.pool.end(function (err) {
+            if (err) return reject(err);
+            return resolve(true)
+        	})
+		})
+	}
+
 }

@@ -14,6 +14,9 @@ const creds = {
 	database : process.env.MYSQL_DATABASE || "birdietest"
 }
 
+process.once('SIGTERM', db.close);
+process.once('SIGINT', db.close);
+
 
 const app = express();
 
