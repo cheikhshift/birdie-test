@@ -20,13 +20,10 @@ test('to see if TableNav events are working', () => {
   const nextButton = screen.getByRole('button', {
     name: /next/i
   })
-
   const prevButton = screen.getByLabelText("prev-button")
-
   let order = "1"
 
   fireEvent.change(dropDown, {target: {value: order}})
-
   expect(props.onPageSizeSet.mock.calls.length).toBe(1)
   
 

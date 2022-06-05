@@ -6,11 +6,11 @@ import { BirdieDatabase } from './db/mysql';
 
 let db = new BirdieDatabase()
 const creds = {
-	host : "birdie-test.cyosireearno.eu-west-2.rds.amazonaws.com",
-	port : 3306,
-	user : "test-read",
-	password : "xnxPp6QfZbCYkY8",
-	database : "birdietest"
+	host : process.env.MYSQL_HOST || "",
+	port : process.env.MYSQL_PORT || "3306",
+	user : process.env.MYSQL_USERNAME || "",
+	password : process.env.MYSQL_PASSWORD || "",
+	database : process.env.MYSQL_DATABASE || ""
 }
 
 

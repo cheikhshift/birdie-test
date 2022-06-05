@@ -16,7 +16,7 @@ export class BirdieDatabase {
 
 	public async connect(
 		host : string,
-		port : number,
+		port : string,
 		username : string,
 		password : string,
 		database : string
