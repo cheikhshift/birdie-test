@@ -57,6 +57,7 @@ export class BirdieDatabase {
 
 	close(){
 		return new Promise((resolve, reject) => {
+			if(!this.pool?.end) return resolve(true)
 			this.pool.end(function (err) {
             if (err) return reject(err);
             return resolve(true)
