@@ -7,7 +7,7 @@ import TableList from './components/TableList'
 import { Event } from '../../backend/src/db/types'
 
 import { TestData } from './testdata'
-import { getEvents, isDev } from './services/api'
+import { getEvents, isDev, getEventCount } from './services/api'
 
 class App extends React.Component<{}, {
   events : Event[],
@@ -19,18 +19,43 @@ class App extends React.Component<{}, {
       tableMode : false
   }
 
+  static BatchSize = 500
+
 
   componentDidMount(){
-      getEvents(0, 100)
-      .then( events => {
-          this.updateEvents(events)
+      getEventCount()
+      .then( count => {
+
+        const maxPages = Math.ceil(count/App.BatchSize)
+        this.dispatchEventFetch(0, maxPages)
+
       })
-      .catch((e) => {
+
+  }
+
+  dispatchEventFetch(page : number, maxPage : number){
+
+    //execute on thread separate from main
+    setTimeout((async () => {
+     
+      try {
+
+         const nextPage = page + 1
+         var newEvents = await getEvents(page, App.BatchSize)
+         newEvents = this.state.events.concat(newEvents)
+         this.updateEvents(newEvents)
+
+         if(nextPage < maxPage) this.dispatchEventFetch(nextPage, maxPage)
+
+      } catch(e) {
+
         if(isDev()){
           this.updateEvents(TestData)
         }
-       
-      })
+      }
+
+     
+    }).bind(this), 5)
   }
 
   updateEvents(events : Event[]){

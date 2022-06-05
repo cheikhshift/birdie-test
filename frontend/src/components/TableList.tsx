@@ -36,6 +36,7 @@ class TableList extends React.Component<{
  }
 
  onPageSet = (page : number) : void => {
+   window.scrollTo(0, 0)
    this.setState(prevState => {
      return {
        ...prevState,
@@ -45,6 +46,7 @@ class TableList extends React.Component<{
  } 
 
  onPageSizeSet = (page : number) : void => {
+   window.scrollTo(0, 0)
    this.setState(prevState => {
      return {
        ...prevState,
@@ -54,9 +56,7 @@ class TableList extends React.Component<{
    })  
  }
 
- componentDidUpdate(){
-   window.scrollTo(0, 0)
- }
+
 
 
   getCaregiver(id : string) : string{

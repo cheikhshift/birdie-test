@@ -4,6 +4,23 @@ export function isDev(){
 	return !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
 }
 
+export async function getEventCount(){
+    
+    const response = await fetch(
+      `${baseURL}/count_events` 
+    )
+
+    let actualData = await response.json();
+
+    if (!response.ok) {     
+        throw new Error(
+            actualData
+        );
+    }
+    
+
+    return actualData.result
+}
 
 export async function getEvents(page : number, limit : number){
 	
@@ -25,7 +42,6 @@ export async function getEvents(page : number, limit : number){
     return actualData.map( (row: any ) => {
         row.event_type = row.event_type.split("_").join(" ")
         if(row.payload.mood){
-            console.log(row)
             row.mood = row.payload.mood
         }
         return row

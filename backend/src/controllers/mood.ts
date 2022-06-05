@@ -35,7 +35,7 @@ moodController.get('/events', async (req, res) => {
   	}
 
   	const offset = page * limit
-  	var result = await db.query(`SELECT * FROM events LIMIT ${offset}, ${limit}`)
+  	var result = await db.query(`SELECT * FROM events ORDER BY timestamp DESC LIMIT ${offset}, ${limit}`)
 
   	result =  result.map( row => {
   		if(row.payload){

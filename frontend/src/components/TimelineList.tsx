@@ -41,7 +41,7 @@ class TimelineList extends React.Component<{
   		this.props.events,
   		this.state.query,
   		this.state.sortOrder
-  	)
+  	).slice(0, 300)
 
 
   	const itemView = items.length === 0 && this.props.events.length > 0 ? (<h2>No items found for query</h2>)

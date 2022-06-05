@@ -14,7 +14,8 @@ class TimelineItem extends React.Component<{
   
    mood_map : any = {
   	"okay" : "green",
-  	"bad" : "red"
+  	"bad" : "red",
+  	"happy" : "yellow"
   }
 
   getCaregiver(id : string) : string{
